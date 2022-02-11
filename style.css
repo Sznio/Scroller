@@ -1,0 +1,39 @@
+*{
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+section{
+   height: 100vh;
+   background-color: #ccc;
+   border: 2px dashed black;
+}
+body{
+   overflow: hidden;
+}
+nav{
+   position: fixed;
+   bottom: 0;
+   left:50%;
+   transform:translateX(-50%);
+   background-color:rgba(0,0,0,0.4);
+   border-radius: 5px 5px 0 0;
+   width:250px;
+   padding:15px;
+   height:50px;
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+}
+.scroll-node{
+   transition: background-color 0.2s;
+   width: 25px;
+   height: 25px;
+   background-color: rgba(0, 0, 0, 0.7);
+   border-radius:50%;
+   cursor: pointer;
+}
+.scroll-node.active{
+   background-color: rgba(17, 33, 156, 1);
+   cursor:default;
+}
