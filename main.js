@@ -5,11 +5,23 @@ const navElement = document.querySelector("nav");
 let currentSectionIndex = 0;
 
 let isThrottled = false;
+const throttlingTimeout = 500;
 
 const getClosest = (counts, goal) => {
       return counts.reduce(function (prev, curr) {
             return Math.abs(curr - goal) < Math.abs(prev - goal) ? curr : prev;
       });
+};
+
+const manageThrottling = () => {
+      if (isThrottled) {
+            return false;
+      }
+      isThrottled = true;
+      setTimeout(() => {
+            isThrottled = false;
+      }, throttlingTimeout);
+      return true;
 };
 
 const getClosestSectionIndex = () => {
@@ -39,12 +51,16 @@ const scrollToSection = (section) => {
 };
 
 const navButtonPressed = (e) => {
+      if (!manageThrottling()) {
+            return;
+      }
       const { index } = e.target.dataset;
       if (index == currentSectionIndex) {
             return;
       }
-      currentSectionIndex = index;
-      scrollToSection(sections[index]);
+
+      currentSectionIndex = Number(index);
+      scrollToSection(getCurrentSection());
 };
 
 const initScroll = () => {
@@ -63,13 +79,9 @@ const getCurrentSection = () => {
 };
 
 const handleScroll = (e) => {
-      if (isThrottled) {
+      if (!manageThrottling()) {
             return;
       }
-      isThrottled = true;
-      setTimeout(() => {
-            isThrottled = false;
-      }, 500);
       const { deltaY } = e;
       const direction = deltaY > 0 ? 1 : -1;
 
@@ -80,8 +92,7 @@ const handleScroll = (e) => {
             return;
       }
 
-      currentSectionIndex += direction;
-
+      currentSectionIndex += Number(direction);
       if (currentSectionIndex > maxSectionIndex - 1) {
             currentSectionIndex = maxSectionIndex;
       } else if (currentSectionIndex < 0) {
@@ -91,4 +102,4 @@ const handleScroll = (e) => {
       scrollToSection(getCurrentSection());
 };
 initScroll();
-document.addEventListener("wheel", (e) => handleScroll(e));
+document.body.addEventListener("wheel", (e) => handleScroll(e));
