@@ -156,7 +156,6 @@ export default class Scroller {
                   this.handleScroll(e)
             );
       }
-
       constructor(
             selectorQueryString,
             navElement,

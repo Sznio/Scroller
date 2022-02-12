@@ -15,66 +15,67 @@ const areArraysEqual = (a, b) => {
 
 const KeyHelper = class {
       static keyCodeMap = {
-            0: "Digit0",
-            1: "Digit1",
-            2: "Digit2",
-            3: "Digit3",
-            4: "Digit4",
-            5: "Digit5",
-            6: "Digit6",
-            7: "Digit7",
-            8: "Digit8",
-            9: "Digit9",
-            '"': "Quote",
-            ",": "Comma",
-            ".": "Period",
-            "/": "Slash",
-            ";": "Semicolon",
-            A: "KeyA",
-            Alt: "AltRight",
-            AltLeft: "AltLeft",
-            AltRight: "AltRight",
-            B: "KeyB",
-            C: "KeyC",
-            CapsLock: "CapsLock",
-            Ctrl: "ControlRight",
-            CtrlLeft: "ControlLeft",
-            CtrlRight: "ControlRight",
-            D: "KeyD",
-            E: "KeyE",
-            Enter: "Enter",
-            Esc: "Escape",
-            F: "KeyF",
-            G: "KeyG",
-            H: "KeyH",
-            I: "KeyI",
-            J: "KeyJ",
-            K: "KeyK",
-            L: "KeyL",
-            M: "KeyM",
-            N: "KeyN",
-            O: "KeyO",
-            P: "KeyP",
-            Q: "KeyQ",
-            R: "KeyR",
-            S: "KeyS",
-            Shift: "ShiftRight",
-            T: "KeyT",
+            KeyA: "A",
+            KeyB: "B",
+            KeyC: "C",
+            KeyD: "D",
+            KeyE: "E",
+            KeyF: "F",
+            KeyG: "G",
+            KeyH: "H",
+            KeyI: "I",
+            KeyJ: "J",
+            KeyK: "K",
+            KeyL: "L",
+            KeyM: "M",
+            KeyN: "N",
+            KeyO: "O",
+            KeyP: "P",
+            KeyQ: "Q",
+            KeyR: "R",
+            KeyS: "S",
+            KeyT: "T",
+            KeyU: "U",
+            KeyV: "V",
+            KeyW: "W",
+            KeyX: "X",
+            KeyY: "Y",
+            KeyZ: "Z",
             Tab: "Tab",
-            U: "KeyU",
-            V: "KeyV",
-            W: "KeyW",
-            X: "KeyX",
-            Y: "KeyY",
-            Z: "KeyZ",
-            "[": "BracketLeft",
-            "\\": "Backslash",
-            "]": "BracketRight",
+            ShiftLeft: "Shift",
+            ShiftRight: "Shift",
+            ControlLeft: "Ctrl",
+            ControlRight: "Ctrl",
+            CapsLock: "Caps Lock",
+            Escape: "Esc",
+            Digit1: "1",
+            Digit2: "2",
+            Digit3: "3",
+            Digit4: "4",
+            Digit5: "5",
+            Digit6: "6",
+            Digit7: "7",
+            Digit8: "8",
+            Digit9: "9",
+            Digit0: "0",
+            Quote: `"`,
+            Semicolon: `;`,
+            Slash: `/`,
+            BracketLeft: "[",
+            BracketRight: "]",
+            Backslash: "\\",
+            Comma: ",",
+            Period: ".",
+            Enter: "Enter",
+            rightArrow: "ArrowRight",
+            leftArrow: "ArrowLeft",
+            upArrow: "ArrowUp",
+            downArrow: "ArrowDown",
       };
 
-      static convertKeyCodeToKey = (keyCode) => {
+      static convertKeyCodeToKey(keyCode) {
             return this.keyCodeMap[keyCode] || keyCode;
-      };
+      }
 };
 
 const KeyCombo = class {
@@ -100,11 +101,11 @@ const KeyCombo = class {
 };
 
 const KeyMgr = class {
-      isKeyPressed = (key) => {
+      isKeyPressed(key) {
             return this.keysPressed.includes(key);
-      };
+      }
 
-      checkForCombo = (newKeyPressKeyCode) => {
+      checkForCombo(newKeyPressKeyCode) {
             let foundCombo = false;
             this.keyCombos.forEach((keyCombo) => {
                   if (!keyCombo) {
@@ -145,9 +146,9 @@ const KeyMgr = class {
                   }
             });
             return foundCombo;
-      };
+      }
 
-      addKeyCombo = (keyComboObject) => {
+      addKeyCombo(keyComboObject) {
             let isThereAlready = false;
             this.keyCombos.forEach((combo) => {
                   if (KeyCombo.areKeyCombosEqual(combo, keyComboObject)) {
@@ -158,15 +159,15 @@ const KeyMgr = class {
                   return;
             }
             this.keyCombos.push(keyComboObject);
-      };
+      }
 
-      removeKeyCombo = (keyComboObject) => {
+      removeKeyCombo(keyComboObject) {
             this.keyCombos = this.keyCombos.filter(
                   (combo) => !KeyCombo.areKeyCombosEqual(combo, keyComboObject)
             );
-      };
+      }
 
-      keyDown = (e) => {
+      keyDown(e) {
             let refinedCode = e.code;
 
             if (refinedCode == "ShiftLeft" || refinedCode == "ShiftRight") {
@@ -210,9 +211,9 @@ const KeyMgr = class {
                         );
                   }
             });
-      };
+      }
 
-      keyUp = (e) => {
+      keyUp(e) {
             let refinedCode = e.code;
 
             if (refinedCode == "ShiftLeft" || refinedCode == "ShiftRight") {
@@ -248,9 +249,9 @@ const KeyMgr = class {
                         );
                   }
             });
-      };
+      }
 
-      addOnKeyPressEvent = (key, callback) => {
+      addOnKeyPressEvent(key, callback) {
             if (key == null) {
                   if (!this.onAnyKeyPressedEvents.includes(callback)) {
                         this.onAnyKeyPressedEvents.push(callback);
@@ -264,9 +265,9 @@ const KeyMgr = class {
                   }
                   this.onCertainKeyPressedEvents[key].push(callback);
             }
-      };
+      }
 
-      addOnKeyReleaseEvent = (key, callback) => {
+      addOnKeyReleaseEvent(key, callback) {
             if (key == null) {
                   if (!this.onAnyKeyReleasedEvents.includes(callback)) {
                         this.onAnyKeyReleasedEvents.push(callback);
@@ -280,9 +281,9 @@ const KeyMgr = class {
                   }
                   this.onCertainKeyReleasedEvents[key].push(callback);
             }
-      };
+      }
 
-      removeOnKeyPressEvent = (key, callback) => {
+      removeOnKeyPressEvent(key, callback) {
             if (key == null) {
                   this.onAnyKeyPressedEvents =
                         this.onAnyKeyPressedEvents.filter(
@@ -297,9 +298,9 @@ const KeyMgr = class {
                               (cb) => cb !== callback
                         );
             }
-      };
+      }
 
-      removeOnKeyReleaseEvent = (key, callback) => {
+      removeOnKeyReleaseEvent(key, callback) {
             if (key == null) {
                   this.onAnyKeyReleasedEvents =
                         this.onAnyKeyReleasedEvents.filter(
@@ -314,14 +315,9 @@ const KeyMgr = class {
                               (cb) => cb !== callback
                         );
             }
-      };
+      }
 
-      constructor(
-            eventSource,
-            debug = false,
-            preventCtrl = false,
-            preventContextMenu = false
-      ) {
+      constructor(eventSource, debug = false) {
             this.eventSource = eventSource;
             this.debug = debug;
             this.keysPressed = [];
@@ -332,19 +328,14 @@ const KeyMgr = class {
             this.onCertainKeyReleasedEvents = {};
             this.eventSource.addEventListener("keydown", this.keyDown);
             this.eventSource.addEventListener("keyup", this.keyUp);
-            if (preventContextMenu) {
-                  this.eventSource.oncontextmenu = function (e) {
+            this.eventSource.oncontextmenu = function (e) {
+                  e.preventDefault();
+            };
+            this.eventSource.addEventListener("keydown", function (e) {
+                  if (e.ctrlKey) {
                         e.preventDefault();
-                  };
-            }
-
-            if (preventCtrl) {
-                  this.eventSource.addEventListener("keydown", function (e) {
-                        if (e.ctrlKey) {
-                              e.preventDefault();
-                        }
-                  });
-            }
+                  }
+            });
       }
 };
 
