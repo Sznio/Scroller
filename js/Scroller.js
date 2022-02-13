@@ -159,9 +159,9 @@ export default class Scroller {
       constructor(
             selectorQueryString,
             navElement,
-            throttlingTimeout,
-            useKeyMgr,
-            defaultElementIndex
+            throttlingTimeout = 350,
+            useKeyMgr = false,
+            defaultElementIndex = 0
       ) {
             if (useKeyMgr == true) {
                   this.keyMgr = new KeyMgr(window, false, false, false);
