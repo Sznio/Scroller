@@ -171,7 +171,6 @@ export default class Scroller {
             this.scrollSource = window;
             this.navElement = navElement;
 
-            this.isThrottled = false;
             this.throttlingTimeout = throttlingTimeout;
             this.defaultElementIndex = defaultElementIndex;
             this.currentSectionIndex = defaultElementIndex || null;
